@@ -1,4 +1,8 @@
+import java.util.concurrent.TimeUnit;
+
 import org.apache.flink.api.common.functions.MapFunction;
+import org.apache.flink.api.common.restartstrategy.RestartStrategies;
+import org.apache.flink.api.common.time.Time;
 import org.apache.flink.api.java.DataSet;
 import org.apache.flink.api.java.ExecutionEnvironment;
 import org.apache.flink.graph.Graph;
@@ -13,6 +17,11 @@ public class CC {
 		String file = args[0];
 
 		ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
+		
+		env.setRestartStrategy(RestartStrategies.fixedDelayRestart(
+				  3, // number of restart attempts
+				  Time.of(10, TimeUnit.SECONDS) // delay
+				));
 		
 		Graph graph = Graph.fromCsvReader(Config.HDFS_URL + file, env)
 				.fieldDelimiterEdges(" ").keyType(LongValue.class)
