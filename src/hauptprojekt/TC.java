@@ -5,6 +5,7 @@ import org.apache.flink.graph.GraphAnalytic;
 import org.apache.flink.graph.library.clustering.undirected.TriadicCensus.Result;
 import org.apache.flink.graph.library.clustering.undirected.TriadicCensus;
 import org.apache.flink.types.LongValue;
+import org.apache.flink.types.NullValue;
 
 public class TC {
 
@@ -13,10 +14,10 @@ public class TC {
 
 		ExecutionEnvironment env = Config.getEnv();
 
-		Graph graph = Graph.fromCsvReader(Config.HDFS_URL + file, env).fieldDelimiterEdges(" ")
+		Graph<LongValue, NullValue, NullValue> graph = Graph.fromCsvReader(Config.HDFS_URL + file, env).fieldDelimiterEdges(" ")
 				.keyType(LongValue.class);
 
-		GraphAnalytic a;
+		GraphAnalytic<LongValue, NullValue, NullValue, Result> a;
 		a = graph.run(new TriadicCensus<>());
 		a.execute();
 

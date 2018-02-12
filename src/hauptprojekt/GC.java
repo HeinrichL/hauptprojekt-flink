@@ -5,6 +5,7 @@ import org.apache.flink.graph.GraphAnalytic;
 import org.apache.flink.graph.library.clustering.directed.GlobalClusteringCoefficient;
 import org.apache.flink.graph.library.clustering.directed.GlobalClusteringCoefficient.Result;
 import org.apache.flink.types.LongValue;
+import org.apache.flink.types.NullValue;
 
 public class GC {
 
@@ -13,14 +14,14 @@ public class GC {
 
 		ExecutionEnvironment env = Config.getEnv();
 
-		Graph graph = Graph.fromCsvReader(Config.HDFS_URL + file, env).fieldDelimiterEdges(" ")
+		Graph<LongValue, NullValue, NullValue> graph = Graph.fromCsvReader(Config.HDFS_URL + file, env).fieldDelimiterEdges(" ")
 				.keyType(LongValue.class);
 
-		GraphAnalytic a;
-		a = graph.run(new GlobalClusteringCoefficient());
+		GraphAnalytic<LongValue, NullValue, NullValue, GlobalClusteringCoefficient.Result> a;
+		a = graph.run(new GlobalClusteringCoefficient<LongValue, NullValue, NullValue>());
 		a.execute();
 
-		Result r = (Result) a.getResult();
+		Result r = a.getResult();
 
 		System.out.println(r.getGlobalClusteringCoefficientScore());
 

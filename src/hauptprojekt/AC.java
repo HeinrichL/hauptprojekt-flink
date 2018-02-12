@@ -5,6 +5,7 @@ import org.apache.flink.graph.GraphAnalytic;
 import org.apache.flink.graph.library.clustering.directed.AverageClusteringCoefficient;
 import org.apache.flink.graph.library.clustering.directed.AverageClusteringCoefficient.Result;
 import org.apache.flink.types.LongValue;
+import org.apache.flink.types.NullValue;
 
 public class AC {
 
@@ -13,14 +14,14 @@ public class AC {
 
 		ExecutionEnvironment env = Config.getEnv();
 
-		Graph graph = Graph.fromCsvReader(Config.HDFS_URL + file, env).fieldDelimiterEdges(" ")
+		Graph<LongValue, NullValue, NullValue> graph = Graph.fromCsvReader(Config.HDFS_URL + file, env).fieldDelimiterEdges(" ")
 				.keyType(LongValue.class);
 
-		GraphAnalytic a;
+		GraphAnalytic<LongValue, NullValue, NullValue, Result> a;
 		a = graph.run(new AverageClusteringCoefficient<>());
 		a.execute();
 
-		Result r = (Result) a.getResult();
+		Result r = a.getResult();
 
 		System.out.println(r.getAverageClusteringCoefficient());
 		
