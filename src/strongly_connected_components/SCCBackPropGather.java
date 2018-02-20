@@ -8,11 +8,16 @@ import org.apache.flink.types.LongValue;
 
 @SuppressWarnings("serial")
 public class SCCBackPropGather
-		extends GatherFunction<SCCVertexValue, Tuple2<LongValue, LongValue>, Tuple2<Long, Long>> {
+		extends GatherFunction<SCCVertexValue, Tuple2<LongValue, LongValue>, Boolean> {
 	
 	// TODO: implement function
 	@Override
-	public Tuple2<Long, Long> gather(Neighbor<SCCVertexValue, Tuple2<LongValue, LongValue>> neighbor) {
-		throw new NotImplementedException();
+	public Boolean gather(Neighbor<SCCVertexValue, Tuple2<LongValue, LongValue>> neighbor) {
+		// neighbor is root or root is reachable from neighbor
+        SCCVertexValue neighborVertex = neighbor.f0;
+        if(neighborVertex.isFinal() && (neighborVertex.isColorRoot() || neighborVertex.isColorRootReachable())){
+            return true;
+		}
+		return false;
 	}
 }

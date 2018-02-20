@@ -9,6 +9,9 @@ public class SCCVertexValue {
 	private boolean firstIteration;
 	private boolean active;
 	public int numIter;
+
+	private boolean colorRootReachable;
+	private boolean isColorRoot;
 	
 	public SCCVertexValue(long id) {
 		setId(id);
@@ -82,8 +85,23 @@ public class SCCVertexValue {
 	
 	@Override
 	public String toString() {
-		return String.format("id: %s, color: %s, isFinal: %s, inDegree: %s, outDegree: %s, active: %s", 
-				id, color, isFinal, inDegree, outDegree, active);
-		
+		return String.format("id: %s, color: %s, isFinal: %s, inDegree: %s, outDegree: %s, active: %s, isColorRoot: %s, colorRootReachable: %s, numIter: %s",
+				id, color, isFinal, inDegree, outDegree, active, isColorRoot, colorRootReachable, numIter);
 	}
+
+    public boolean isColorRoot() {
+        return isColorRoot;
+    }
+
+    public void setColorRoot(boolean colorRoot) {
+        isColorRoot = colorRoot;
+    }
+
+    public boolean isColorRootReachable() {
+        return colorRootReachable;
+    }
+
+    public void setColorRootReachable(boolean existsSameColorFinalNeighbor) {
+        this.colorRootReachable = existsSameColorFinalNeighbor;
+    }
 }

@@ -6,11 +6,11 @@ import org.apache.flink.graph.gsa.SumFunction;
 import org.apache.flink.types.LongValue;
 
 @SuppressWarnings("serial")
-public class SCCBackPropSum extends SumFunction<SCCVertexValue, Tuple2<LongValue, LongValue>, Tuple2<Long, Long>> {
+public class SCCBackPropSum extends SumFunction<SCCVertexValue, Tuple2<LongValue, LongValue>, Boolean> {
 
 	// TODO: implement function
 	@Override
-	public Tuple2<Long, Long> sum(Tuple2<Long, Long> arg0, Tuple2<Long, Long> arg1) {
-		throw new NotImplementedException();
+	public Boolean sum(Boolean arg0, Boolean arg1) {
+		return arg0 || arg1;
 	}
 }
