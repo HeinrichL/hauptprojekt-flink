@@ -15,8 +15,8 @@ import hauptprojekt.Config;
 public class SCC {
 	public static void main(String[] args) throws Exception {
 	    //"Flink/input/graph_10000.edgelist";//
-		String file = "input/graph_10000.edgelist";//Config.HDFS_URL + args[0]; //
-		int numIter = 1;//Integer.parseInt(args[1]);
+		String file = Config.HDFS_URL + args[0]; //
+		int numIter = Integer.parseInt(args[1]);
 
 		ExecutionEnvironment env = Config.getEnv();
 
