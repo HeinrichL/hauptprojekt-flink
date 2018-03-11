@@ -1,4 +1,4 @@
-package strongly_connected_components;
+package scc;
 
 import org.apache.flink.graph.Vertex;
 import org.apache.flink.graph.spargel.GatherFunction;

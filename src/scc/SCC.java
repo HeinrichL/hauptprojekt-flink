@@ -1,13 +1,9 @@
-package strongly_connected_components;
+package scc;
 
-import org.apache.flink.api.common.accumulators.Accumulator;
-import org.apache.flink.api.common.accumulators.IntCounter;
 import org.apache.flink.api.common.functions.FilterFunction;
 import org.apache.flink.api.common.functions.MapFunction;
-import org.apache.flink.api.common.io.RichOutputFormat;
 import org.apache.flink.api.java.ExecutionEnvironment;
 import org.apache.flink.api.java.tuple.Tuple2;
-import org.apache.flink.configuration.Configuration;
 import org.apache.flink.graph.*;
 import org.apache.flink.graph.gsa.GSAConfiguration;
 import org.apache.flink.graph.spargel.ScatterGatherConfiguration;
@@ -16,13 +12,11 @@ import org.apache.flink.types.NullValue;
 
 import hauptprojekt.Config;
 
-import java.io.IOException;
-
-public class StronglyConnectedComponents {
+public class SCC {
 	public static void main(String[] args) throws Exception {
 	    //"Flink/input/graph_10000.edgelist";//
-		String file = Config.HDFS_URL + args[0]; //
-		int numIter = Integer.parseInt(args[1]);
+		String file = "input/graph_10000.edgelist";//Config.HDFS_URL + args[0]; //
+		int numIter = 1;//Integer.parseInt(args[1]);
 
 		ExecutionEnvironment env = Config.getEnv();
 
@@ -66,17 +60,17 @@ public class StronglyConnectedComponents {
             });
 		}
 
-		graph.getVertices().print();
+		//graph.getVertices().print();
         //System.out.println(env.getExecutionPlan());
-		env.execute();
 
-
-		/*graph.getVertices().filter(new FilterFunction<Vertex<LongValue, SCCVertexValue>>() {
+		graph.getVertices().filter(new FilterFunction<Vertex<LongValue,SCCVertexValue>>() {
 			@Override
 			public boolean filter(Vertex<LongValue, SCCVertexValue> longValueSCCVertexValueVertex) throws Exception {
-				return longValueSCCVertexValueVertex.f1.isActive();//longValueSCCVertexValueVertex.f1.isColorRoot() || longValueSCCVertexValueVertex.f1.isExistsSameColorFinalNeighbor();
+				return longValueSCCVertexValueVertex.f1.getColor() == longValueSCCVertexValueVertex.f1.getId();
 			}
-		}).print();*/
+		}).print();
+
+		env.execute();
 	}
 
 	@SuppressWarnings("serial")

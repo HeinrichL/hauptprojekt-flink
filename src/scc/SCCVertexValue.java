@@ -1,4 +1,4 @@
-package strongly_connected_components;
+package scc;
 
 public class SCCVertexValue {
 	private long id;

@@ -1,6 +1,5 @@
-package strongly_connected_components;
+package scc;
 
-import org.apache.commons.lang.NotImplementedException;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.graph.gsa.GatherFunction;
 import org.apache.flink.graph.gsa.Neighbor;

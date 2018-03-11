@@ -1,6 +1,5 @@
-package strongly_connected_components;
+package scc;
 
-import org.apache.flink.api.common.accumulators.IntCounter;
 import org.apache.flink.graph.gsa.ApplyFunction;
 import org.apache.flink.types.LongValue;
 
